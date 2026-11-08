@@ -5,6 +5,7 @@ package com.example.hw02_program01;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -16,6 +17,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity
     SeekBar sb_j_blue;
     ListView lv_j_savedColors;
 
+    //arraylist
+    private ArrayList<ColorInfo> listOfColors;
+
 
     //color variables
     private int redValue = 0;
@@ -40,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     String redHex = "00";
     String greenHex = "00";
     String blueHex = "00";
+    String currentHex = (redHex + greenHex + blueHex);
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -66,16 +73,20 @@ public class MainActivity extends AppCompatActivity
         sb_j_blue = findViewById(R.id.sb_v_blue);
         lv_j_savedColors = findViewById(R.id.lv_v_savedColors);
 
+        //initial array
+        listOfColors = new ArrayList<ColorInfo>();
+
         //initial display
         tv_j_red.setText("Red: 0");
         tv_j_green.setText("Green: 0");
         tv_j_blue.setText("Blue: 0");
-        tv_j_hex.setText("Hex Representation: 000000");
+        tv_j_hex.setText("Hex Representation: " + currentHex);
 
         //Event Functions
         redChangeEvent();
         greenChangeEvent();
         blueChangeEvent();
+        saveButtonClickEvent();
 
     }
 
@@ -92,7 +103,8 @@ public class MainActivity extends AppCompatActivity
                 //Log.d("Red Value:", "Red Value: " + redValue);
                 redHex = String.format("%02X", redValue);
                 //Log.d("Red Hex:", "Red Hex: " + redHex);
-                tv_j_hex.setText("Hex Representation: " + redHex + greenHex + blueHex);
+                currentHex = (redHex + greenHex + blueHex);
+                tv_j_hex.setText("Hex Representation: " + currentHex);
                 main.setBackgroundColor(Color.rgb(redValue, greenValue, blueValue));
             }
 
@@ -123,7 +135,8 @@ public class MainActivity extends AppCompatActivity
                 //Log.d("Green Value:", "Green Value: " + greenValue);
                 greenHex = String.format("%02X", greenValue);
                 //Log.d("Green Hex:", "Green Hex: " + greenHex);
-                tv_j_hex.setText("Hex Representation: " + redHex + greenHex + blueHex);
+                currentHex = (redHex + greenHex + blueHex);
+                tv_j_hex.setText("Hex Representation: " + currentHex);
                 main.setBackgroundColor(Color.rgb(redValue, greenValue, blueValue));
             }
 
@@ -154,7 +167,8 @@ public class MainActivity extends AppCompatActivity
                 //Log.d("Blue Value:", "Blue Value: " + blueValue);
                 blueHex = String.format("%02X", blueValue);
                 //Log.d("Blue Hex:", "Blue Hex: " + blueHex);
-                tv_j_hex.setText("Hex Representation: " + redHex + greenHex + blueHex);
+                currentHex = (redHex + greenHex + blueHex);
+                tv_j_hex.setText("Hex Representation: " + currentHex);
                 main.setBackgroundColor(Color.rgb(redValue, greenValue, blueValue));
             }
 
@@ -172,4 +186,23 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    private void saveButtonClickEvent()
+    {
+        btn_j_saveColor.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+                //creates saved color object
+                ColorInfo ci = new ColorInfo(redValue, greenValue, blueValue, currentHex);
+
+                //add it to the list
+                listOfColors.add(ci);
+                Log.d("List Size:", "List Size: " + listOfColors.size());
+
+
+            }
+        });
+    }
 }
