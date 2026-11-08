@@ -1,5 +1,7 @@
 package com.example.hw02_program01;
-
+//Name: Todd Sachs
+//Date: 11-7-2026
+//Desc: RGB Selection App
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
