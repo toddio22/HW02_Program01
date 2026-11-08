@@ -68,7 +68,23 @@ public class ColorInfoAdapter extends BaseAdapter
         hex.setText("Hex: " + ci.getHex());
         convertView.setBackgroundColor(Color.rgb(ci.getRed(), ci.getGreen(), ci.getBlue()));
 
+        if(ci.getRed() + ci.getGreen() + ci.getBlue() <= 380)
+        {
+            red.setTextColor(Color.rgb(255, 255,255));
+            green.setTextColor(Color.rgb(255, 255,255));
+            blue.setTextColor(Color.rgb(255, 255,255));
+            hex.setTextColor(Color.rgb(255, 255,255));
+        }
+        else
+        {
+            red.setTextColor(Color.rgb(0, 0, 0));
+            green.setTextColor(Color.rgb(0, 0, 0));
+            blue.setTextColor(Color.rgb(0, 0, 0));
+            hex.setTextColor(Color.rgb(0, 0, 0));
+        }
+
         //return view that is built so we can add the row to the listview
         return convertView;
     }
+
 }

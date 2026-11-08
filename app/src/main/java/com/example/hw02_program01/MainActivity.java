@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity
         greenChangeEvent();
         blueChangeEvent();
         saveButtonClickEvent();
+        listViewClickEvent();
 
     }
 
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity
                 currentHex = (redHex + greenHex + blueHex);
                 tv_j_hex.setText("Hex Representation: " + currentHex);
                 main.setBackgroundColor(Color.rgb(redValue, greenValue, blueValue));
+                brightnessTextChange();
             }
 
             @Override
@@ -141,6 +144,7 @@ public class MainActivity extends AppCompatActivity
                 currentHex = (redHex + greenHex + blueHex);
                 tv_j_hex.setText("Hex Representation: " + currentHex);
                 main.setBackgroundColor(Color.rgb(redValue, greenValue, blueValue));
+                brightnessTextChange();
             }
 
             @Override
@@ -173,6 +177,7 @@ public class MainActivity extends AppCompatActivity
                 currentHex = (redHex + greenHex + blueHex);
                 tv_j_hex.setText("Hex Representation: " + currentHex);
                 main.setBackgroundColor(Color.rgb(redValue, greenValue, blueValue));
+                brightnessTextChange();
             }
 
             @Override
@@ -207,7 +212,10 @@ public class MainActivity extends AppCompatActivity
                 //update the visuals of listview by updating the adapter
                 cAdapter.notifyDataSetChanged();
 
-
+                //reset to white
+                sb_j_red.setProgress(255);
+                sb_j_green.setProgress(255);
+                sb_j_blue.setProgress(255);
             }
         });
     }
@@ -216,6 +224,52 @@ public class MainActivity extends AppCompatActivity
     {
         cAdapter = new ColorInfoAdapter(this, listOfColors);
         lv_j_savedColors.setAdapter(cAdapter);
+    }
+
+    private void listViewClickEvent()
+    {
+        lv_j_savedColors.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                //get initial info
+                ColorInfo selectedColor = listOfColors.get(position);
+                int redSelect = selectedColor.getRed();
+                int greenSelect = selectedColor.getGreen();
+                int blueSelect = selectedColor.getBlue();
+                String hexSelect = selectedColor.getHex();
+
+                //set GUI elements
+                main.setBackgroundColor(Color.rgb(redSelect, greenSelect, blueSelect));
+                sb_j_red.setProgress(redSelect);
+                tv_j_red.setText("Red: " + redSelect);
+                sb_j_green.setProgress(greenSelect);
+                tv_j_green.setText("Green: " + greenSelect);
+                sb_j_blue.setProgress(blueSelect);
+                tv_j_blue.setText("Blue: " + blueSelect);
+                tv_j_hex.setText("Hex Representation: " + hexSelect);
+
+            }
+        });
+    }
+
+    private void brightnessTextChange()
+    {
+        if(redValue + greenValue + blueValue <= 380)
+        {
+            tv_j_red.setTextColor(Color.rgb(255, 255,255));
+            tv_j_green.setTextColor(Color.rgb(255, 255,255));
+            tv_j_blue.setTextColor(Color.rgb(255, 255,255));
+            tv_j_hex.setTextColor(Color.rgb(255, 255,255));
+        }
+        else
+        {
+            tv_j_red.setTextColor(Color.rgb(0,0,0));
+            tv_j_green.setTextColor(Color.rgb(0, 0,0));
+            tv_j_blue.setTextColor(Color.rgb(0, 0,0));
+            tv_j_hex.setTextColor(Color.rgb(0, 0,0));
+        }
     }
 
 }
