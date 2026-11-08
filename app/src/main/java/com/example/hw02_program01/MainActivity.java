@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     SeekBar sb_j_green;
     SeekBar sb_j_blue;
     ListView lv_j_savedColors;
+    ColorInfoAdapter cAdapter;
 
     //arraylist
     private ArrayList<ColorInfo> listOfColors;
@@ -81,6 +82,8 @@ public class MainActivity extends AppCompatActivity
         tv_j_green.setText("Green: 0");
         tv_j_blue.setText("Blue: 0");
         tv_j_hex.setText("Hex Representation: " + currentHex);
+
+        fillListView();
 
         //Event Functions
         redChangeEvent();
@@ -199,10 +202,20 @@ public class MainActivity extends AppCompatActivity
 
                 //add it to the list
                 listOfColors.add(ci);
-                Log.d("List Size:", "List Size: " + listOfColors.size());
+                //Log.d("List Size:", "List Size: " + listOfColors.size());
+
+                //update the visuals of listview by updating the adapter
+                cAdapter.notifyDataSetChanged();
 
 
             }
         });
     }
+
+    private void fillListView()
+    {
+        cAdapter = new ColorInfoAdapter(this, listOfColors);
+        lv_j_savedColors.setAdapter(cAdapter);
+    }
+
 }
