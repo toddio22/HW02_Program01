@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity
         listOfColors = new ArrayList<ColorInfo>();
 
         //initial display
-        tv_j_red.setText("Red: 0");
-        tv_j_green.setText("Green: 0");
-        tv_j_blue.setText("Blue: 0");
+        tv_j_red.setText("Red: " + sb_j_red.getProgress());
+        tv_j_green.setText("Green: " + sb_j_green.getProgress());
+        tv_j_blue.setText("Blue: " + sb_j_blue.getProgress());
         tv_j_hex.setText("Hex Representation: " + currentHex);
 
         fillListView();
